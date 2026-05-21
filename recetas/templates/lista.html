@@ -1,0 +1,25 @@
+<h1>Recetas de Cocina</h1>
+
+<a href="/crear/">Nueva receta</a>
+
+<hr>
+
+{% for receta in recetas %}
+
+    <h2>{{ receta.titulo }}</h2>
+
+    <h3>Ingredientes:</h3>
+    <p>{{ receta.ingredientes }}</p>
+
+    <h3>Preparación:</h3>
+    <p>{{ receta.preparacion }}</p>
+
+    <a href="/editar/{{ receta.id }}/">Editar</a>
+
+    <a href="/eliminar/{{ receta.id }}/">
+        Eliminar
+    </a>
+
+    <hr>
+
+{% endfor %}

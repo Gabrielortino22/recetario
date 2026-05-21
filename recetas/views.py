@@ -8,24 +8,35 @@ def lista_recetas(request):
 
 # CREAR
 def crear_receta(request):
+
     if request.method == 'POST':
+
         Receta.objects.create(
             titulo=request.POST['titulo'],
+            categoria=request.POST['categoria'],
             ingredientes=request.POST['ingredientes'],
             preparacion=request.POST['preparacion']
         )
+
         return redirect('lista')
 
     return render(request, 'crear.html')
 
 # EDITAR
 def editar_receta(request, id):
+
     receta = get_object_or_404(Receta, id=id)
 
     if request.method == 'POST':
+
         receta.titulo = request.POST['titulo']
+
+        receta.categoria = request.POST['categoria']
+
         receta.ingredientes = request.POST['ingredientes']
+
         receta.preparacion = request.POST['preparacion']
+
         receta.save()
 
         return redirect('lista')
@@ -34,6 +45,9 @@ def editar_receta(request, id):
 
 # ELIMINAR
 def eliminar_receta(request, id):
+
     receta = get_object_or_404(Receta, id=id)
+
     receta.delete()
+
     return redirect('lista')

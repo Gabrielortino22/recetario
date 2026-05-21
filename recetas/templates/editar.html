@@ -1,0 +1,53 @@
+<h1>Editar Receta</h1>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <input type="text"
+           name="titulo"
+           value="{{ receta.titulo }}">
+
+    <br><br>
+
+    <select name="categoria">
+
+        <option value="Dulce"
+        {% if receta.categoria == 'Dulce' %}
+            selected
+        {% endif %}>
+            Dulce
+        </option>
+
+        <option value="Salada"
+        {% if receta.categoria == 'Salada' %}
+            selected
+        {% endif %}>
+            Salada
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <textarea name="ingredientes">
+{{ receta.ingredientes }}
+    </textarea>
+
+    <br><br>
+
+    <textarea name="preparacion">
+{{ receta.preparacion }}
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Actualizar
+    </button>
+
+</form>
+
+<br>
+
+<a href="/">Volver</a>

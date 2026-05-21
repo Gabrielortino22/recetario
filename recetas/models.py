@@ -1,10 +1,24 @@
 from django.db import models
 
 class Receta(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
+
+    CATEGORIAS = [
+        ('Dulce', 'Dulce'),
+        ('Salada', 'Salada'),
+    ]
+
+    titulo = models.CharField(max_length=100)
+
+    categoria = models.CharField(
+        max_length=10,
+        choices=CATEGORIAS
+    )
+
     ingredientes = models.TextField()
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    preparacion = models.TextField()
+
+    fecha = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.nombre
+        return self.titulo
