@@ -1,25 +1,98 @@
-<h1>Recetas de Cocina</h1>
+{% load static %}
 
-<a href="/crear/">Nueva receta</a>
+<!DOCTYPE html>
 
-<hr>
+<html lang="es">
 
-{% for receta in recetas %}
+<head>
 
-    <h2>{{ receta.titulo }}</h2>
+    <meta charset="UTF-8">
 
-    <h3>Ingredientes:</h3>
-    <p>{{ receta.ingredientes }}</p>
+    <title>Recetario</title>
 
-    <h3>Preparación:</h3>
-    <p>{{ receta.preparacion }}</p>
+    <link rel="stylesheet"
+          href="{% static 'css/estilos.css' %}">
 
-    <a href="/editar/{{ receta.id }}/">Editar</a>
+</head>
 
-    <a href="/eliminar/{{ receta.id }}/">
-        Eliminar
+<body class="fondo-receta">
+
+<div class="contenedor">
+
+    <h1>🍴 Recetas de Cocina</h1>
+
+    <a href="/crear/"
+       class="nueva-receta">
+
+        + Nueva receta
+
     </a>
 
-    <hr>
+    <br><br>
 
-{% endfor %}
+    {% for receta in recetas %}
+
+        <div class="card">
+
+            {% if receta.imagen %}
+
+                <img src="{{ receta.imagen.url }}"
+                     alt="{{ receta.titulo }}">
+
+            {% endif %}
+
+            <h2>{{ receta.titulo }}</h2>
+
+            {% if receta.categoria == 'Dulce' %}
+
+                <span class="categoria dulce">
+                    {{ receta.categoria }}
+                </span>
+
+            {% else %}
+
+                <span class="categoria salada">
+                    {{ receta.categoria }}
+                </span>
+
+            {% endif %}
+
+            <h3>Ingredientes</h3>
+
+            <p>{{ receta.ingredientes }}</p>
+
+            <h3>Preparación</h3>
+
+            <p>{{ receta.preparacion }}</p>
+
+            <br>
+
+            <a href="/editar/{{ receta.id }}/">
+                ✏️ Editar
+            </a>
+
+            <a href="/eliminar/{{ receta.id }}/">
+                🗑️ Eliminar
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <div class="card">
+
+            <h2>No hay recetas todavía</h2>
+
+            <p>
+                Creá tu primera receta 🍳
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+
+</html>

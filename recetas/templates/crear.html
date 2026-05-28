@@ -1,45 +1,93 @@
-<h1>Nueva Receta</h1>
+{% load static %}
 
-<form method="POST">
+<!DOCTYPE html>
 
-    {% csrf_token %}
+<html lang="es">
 
-    <input type="text"
-           name="titulo"
-           placeholder="Título">
+<head>
 
-    <br><br>
+    <meta charset="UTF-8">
 
-    <select name="categoria">
+    <title>Nueva Receta</title>
 
-        <option value="Dulce">
-            Dulce
-        </option>
+    <link rel="stylesheet"
+          href="{% static 'css/estilos.css' %}">
 
-        <option value="Salada">
-            Salada
-        </option>
+</head>
 
-    </select>
+<body class="fondo-receta">
 
-    <br><br>
+<div class="contenedor">
 
-    <textarea name="ingredientes"
-              placeholder="Ingredientes"></textarea>
+    <div class="card">
 
-    <br><br>
+        <h1>Nueva Receta</h1>
 
-    <textarea name="preparacion"
-              placeholder="Preparación"></textarea>
+        <form method="POST"
+              enctype="multipart/form-data">
 
-    <br><br>
+            {% csrf_token %}
 
-    <button type="submit">
-        Guardar
-    </button>
+            <label>Título</label>
 
-</form>
+            <input type="text"
+                   name="titulo"
+                   placeholder="Título">
 
-<br>
+            <br><br>
 
-<a href="/">Volver</a>
+            <label>Categoría</label>
+
+            <select name="categoria">
+
+                <option value="Dulce">
+                    Dulce
+                </option>
+
+                <option value="Salada">
+                    Salada
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <label>Ingredientes</label>
+
+            <textarea name="ingredientes"
+                      placeholder="Ingredientes"></textarea>
+
+            <br><br>
+
+            <label>Preparación</label>
+
+            <textarea name="preparacion"
+                      placeholder="Preparación"></textarea>
+
+            <br><br>
+
+            <label>Imagen</label>
+
+            <input type="file"
+                   name="imagen">
+
+            <br><br>
+
+            <button type="submit">
+                Guardar
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="{% url 'lista' %}">
+            Volver
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
