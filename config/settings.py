@@ -2,7 +2,7 @@
 Django settings for config project.
 """  # Archivo principal de configuración del proyecto Django
 
-from pathlib import Path  # Importa Path para manejar rutas de carpetas y archivos
+from pathlib import Path  #importa la clase Path, que sirve para trabajar con rutas (paths) de archivos y carpetas de una manera más simple y segura.
 
 BASE_DIR = Path(__file__).resolve().parent.parent  # Guarda la ruta principal del proyecto
 
@@ -70,24 +70,24 @@ ROOT_URLCONF = 'config.urls'  # Archivo principal de rutas del proyecto
 # CONFIGURACIÓN DE TEMPLATES
 # =========================================================
 
-TEMPLATES = [
+TEMPLATES = [  # Lista de configuraciones del sistema de templates de Django
     {
 
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Motor de templates de Django
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Motor de templates que utilizará Django
 
-        'DIRS': [],  # Carpetas extra donde buscar templates
+        'DIRS': [],  # Carpetas adicionales donde Django buscará archivos HTML
 
-        'APP_DIRS': True,  # Busca templates dentro de las apps
+        'APP_DIRS': True,  # Busca automáticamente templates dentro de cada app instalada
 
-        'OPTIONS': {
+        'OPTIONS': {  # Configuraciones extra del motor de templates
 
-            'context_processors': [
+            'context_processors': [  # Variables que estarán disponibles automáticamente en todos los templates
 
-                'django.template.context_processors.request',  # Agrega información de request
+                'django.template.context_processors.request',  # Agrega el objeto request a los templates
 
-                'django.contrib.auth.context_processors.auth',  # Agrega información del usuario
+                'django.contrib.auth.context_processors.auth',  # Agrega información del usuario autenticado
 
-                'django.contrib.messages.context_processors.messages',  # Agrega sistema de mensajes
+                'django.contrib.messages.context_processors.messages',  # Agrega el sistema de mensajes de Django
             ],
         },
     },
