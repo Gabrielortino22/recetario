@@ -1,23 +1,10 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
+{% block titulo %}
+Recetario
+{% endblock %}
 
-<html lang="es">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Recetario</title>
-
-    <link rel="stylesheet"
-          href="{% static 'css/estilos.css' %}">
-
-</head>
-
-<body class="fondo-receta">
-
-<div class="contenedor">
+{% block contenido %}
 
     <h1>🍴 Recetas de Cocina</h1>
 
@@ -38,6 +25,31 @@
 
                 <img src="{{ receta.imagen.url }}"
                      alt="{{ receta.titulo }}">
+
+                <br><br>
+
+            {% endif %}
+
+            <!-- 🎬 VIDEO DESPLEGABLE -->
+            {% if receta.video %}
+
+                <details class="video-box">
+
+                    <summary class="video-title">
+                        🎬 Ver video
+                    </summary>
+
+                    <video class="video-mini" controls>
+
+                        <source src="{{ receta.video.url }}">
+
+                        Tu navegador no soporta video.
+
+                    </video>
+
+                </details>
+
+                <br><br>
 
             {% endif %}
 
@@ -71,6 +83,8 @@
                 ✏️ Editar
             </a>
 
+            &nbsp;
+
             <a href="/eliminar/{{ receta.id }}/">
                 🗑️ Eliminar
             </a>
@@ -91,8 +105,4 @@
 
     {% endfor %}
 
-</div>
-
-</body>
-
-</html>
+{% endblock %}

@@ -12,6 +12,9 @@ urlpatterns = [  # Lista principal de rutas del proyecto
     path('admin/', admin.site.urls),  # Ruta del panel administrador -> /admin/
 
     path('', include('recetas.urls')),  # Incluye las rutas definidas en recetas/urls.py
+
+    path('accounts/', include('django.contrib.auth.urls')),
+    
 ]
 
 

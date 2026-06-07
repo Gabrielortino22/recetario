@@ -72,3 +72,46 @@ class Receta(models.Model):
 
         # Devuelve el título de la receta como texto.
         return self.titulo
+
+     
+class Receta(models.Model):
+
+    titulo = models.CharField(max_length=100)
+
+    categoria = models.CharField(max_length=20)
+
+    ingredientes = models.TextField()
+
+    preparacion = models.TextField()
+
+    imagen = models.ImageField(
+        upload_to='recetas/',
+        blank=True,
+        null=True
+    )
+
+    video = models.FileField(
+        upload_to='videos/',
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.titulo   
+    from django.db import models
+
+class Receta(models.Model):
+
+    titulo = models.CharField(max_length=100)
+    categoria = models.CharField(max_length=20)
+    ingredientes = models.TextField()
+    preparacion = models.TextField()
+
+    imagen = models.ImageField(upload_to='recetas/', blank=True, null=True)
+
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+
+    fecha = models.DateTimeField(auto_now_add=True)  # 👈 NUEVO
+
+    def __str__(self):
+        return self.titulo

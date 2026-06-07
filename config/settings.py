@@ -75,7 +75,7 @@ TEMPLATES = [  # Lista de configuraciones del sistema de templates de Django
 
         'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Motor de templates que utilizará Django
 
-        'DIRS': [],  # Carpetas adicionales donde Django buscará archivos HTML
+        'DIRS': [BASE_DIR / 'templates'],  # Carpetas adicionales donde Django buscará archivos HTML
 
         'APP_DIRS': True,  # Busca automáticamente templates dentro de cada app instalada
 
@@ -139,7 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # INTERNACIONALIZACIÓN
 # =========================================================
 
-LANGUAGE_CODE = 'en-us'  # Idioma principal del proyecto
+LANGUAGE_CODE = 'es-ar'  # Idioma principal del proyecto
 
 TIME_ZONE = 'UTC'  # Zona horaria del proyecto
 
@@ -157,3 +157,13 @@ STATIC_URL = 'static/'  # URL para acceder a archivos estáticos
 MEDIA_URL = '/media/'  # URL para acceder a archivos subidos
 
 MEDIA_ROOT = BASE_DIR / 'media'  # Carpeta física donde se guardan los archivos media
+
+LOGIN_URL = '/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

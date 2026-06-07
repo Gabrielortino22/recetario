@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Iniciar Sesión</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/estilos.css' %}">
+
+</head>
+
+<body class="fondo-receta">
+
+<div class="contenedor">
+
+    <div class="card">
+
+        <h1>🔐 Iniciar Sesión</h1>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {% if form.errors %}
+
+                <p style="color:red;">
+                    ❌ Usuario o contraseña incorrectos.
+                </p>
+
+            {% endif %}
+
+            <label for="id_username">
+                Usuario
+            </label>
+
+            <input type="text"
+                   name="username"
+                   id="id_username"
+                   placeholder="Ingrese su usuario"
+                   required>
+
+            <br><br>
+
+            <label for="id_password">
+                Contraseña
+            </label>
+
+            <input type="password"
+                   name="password"
+                   id="id_password"
+                   placeholder="Ingrese su contraseña"
+                   required>
+
+            <br>
+
+          <p class="mostrar-password"
+             id="mostrarPassword">
+
+              👁  Mostrar contraseña
+
+          </p>
+
+            <br><br>
+
+            <button type="submit">
+                Ingresar
+            </button>
+
+
+            <br><br>
+
+            <a href="{% url 'password_reset' %}">
+                 ¿Olvidaste tu contraseña?
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const botonMostrar = document.getElementById('mostrarPassword');
+
+const password = document.getElementById('id_password');
+
+botonMostrar.addEventListener('click', function() {
+
+    if (password.type === 'password') {
+
+        password.type = 'text';
+
+        botonMostrar.innerHTML = '🙈 Ocultar contraseña';
+
+    } else {
+
+        password.type = 'password';
+
+        botonMostrar.innerHTML = '👁 Mostrar contraseña';
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
