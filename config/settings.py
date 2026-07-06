@@ -22,24 +22,24 @@ ALLOWED_HOSTS = []  # Lista de dominios permitidos
 # APLICACIONES INSTALADAS
 # =========================================================
 
-INSTALLED_APPS = [
-     'jazzmin',
+INSTALLED_APPS = [  # Lista de aplicaciones que Django cargará al iniciar el proyecto
 
-    'django.contrib.admin',  # Panel de administración de Django
+    'jazzmin',  # Personaliza y mejora la apariencia del panel de administración de Django
 
-    'django.contrib.auth',  # Sistema de autenticación y usuarios
+    'django.contrib.admin',  # Activa el panel de administración de Django
 
-    'django.contrib.contenttypes',  # Manejo de tipos de contenido
+    'django.contrib.auth',  # Proporciona el sistema de usuarios, grupos y permisos
 
-    'django.contrib.sessions',  # Manejo de sesiones de usuarios
+    'django.contrib.contenttypes',  # Permite manejar relaciones entre distintos tipos de modelos
 
-    'django.contrib.messages',  # Sistema de mensajes temporales
+    'django.contrib.sessions',  # Permite mantener sesiones de usuarios entre distintas páginas
 
-    'django.contrib.staticfiles',  # Manejo de archivos estáticos
+    'django.contrib.messages',  # Permite mostrar mensajes temporales (éxito, error, advertencia, etc.)
 
-    'recetas',  # Aplicación personalizada del proyecto
+    'django.contrib.staticfiles',  # Gestiona archivos estáticos como CSS, JavaScript e imágenes
+
+    'recetas',  # Tu aplicación personalizada donde está el sistema de recetas
 ]
-
 
 # =========================================================
 # MIDDLEWARE

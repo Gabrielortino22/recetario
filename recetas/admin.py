@@ -1,35 +1,75 @@
-from django.contrib import admin  # Importa el módulo de administración de Django
+from django.contrib import admin
 
-from .models import Receta  # Importa el modelo Receta desde models.py
+from .models import Receta, Perfil
 
 
-@admin.register(Receta)  # Registra el modelo Receta en el panel de administración
-class RecetaAdmin(admin.ModelAdmin):  # Crea una configuración personalizada para mostrar Receta en el admin
 
-    list_display = (  # Define las columnas que se mostrarán en la lista de recetas
+# =====================================================
+# ADMINISTRACIÓN DE RECETAS
+# =====================================================
 
-        'titulo',  # Muestra el campo título
+@admin.register(Receta)
+class RecetaAdmin(admin.ModelAdmin):
 
-        'categoria',  # Muestra el campo categoría
+    list_display = (
 
-        'fecha'  # Muestra la fecha de creación
+        'titulo',
+
+        'categoria',
+
+        'fecha'
+
     )
 
-    search_fields = (  # Campos sobre los que funcionará el buscador del admin
+    search_fields = (
 
-        'titulo',  # Permite buscar por título
+        'titulo',
 
-        'ingredientes'  # Permite buscar palabras dentro de ingredientes
+        'ingredientes'
+
     )
 
-    list_filter = (  # Agrega filtros en el lateral derecho del panel admin
+    list_filter = (
 
-        'categoria',  # Permite filtrar recetas por categoría
+        'categoria',
+
     )
 
 
-admin.site.site_header = "Administración del Recetario"  # Cambia el encabezado principal que aparece en la parte superior del panel de administración de Django
+# =====================================================
+# ADMINISTRACIÓN DE PERFILES
+# =====================================================
 
-admin.site.site_title = "Panel Recetas"  # Cambia el título HTML del panel de administración que aparece en la pestaña del navegador
+@admin.register(Perfil)
+class PerfilAdmin(admin.ModelAdmin):
 
-admin.site.index_title = "Bienvenido al panel de recetas"  # Cambia el título que aparece en la página principal del panel de administración, debajo del encabezado principal
+    list_display = (
+
+        'usuario',
+
+        'rol',
+
+    )
+
+    list_filter = (
+
+        'rol',
+
+    )
+
+    search_fields = (
+
+        'usuario__username',
+
+    )
+
+
+# =====================================================
+# PERSONALIZACIÓN DEL PANEL
+# =====================================================
+
+admin.site.site_header = "Administración del Recetario"
+
+admin.site.site_title = "Panel Recetas"
+
+admin.site.index_title = "Bienvenido al panel de recetas"

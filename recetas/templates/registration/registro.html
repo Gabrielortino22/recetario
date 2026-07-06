@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Crear cuenta</title>
+
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+
+</head>
+
+<body class="login-body">
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <h1>🍴 Crear cuenta</h1>
+
+        <p class="sub">
+            Registrate para acceder al recetario
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+
+                Crear cuenta
+
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="{% url 'login' %}">
+
+            ← Ya tengo una cuenta
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

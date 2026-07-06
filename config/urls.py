@@ -1,26 +1,51 @@
-from django.contrib import admin  # Importa el panel de administración de Django
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
-from django.urls import path, include  # path crea rutas e include importa rutas de otras apps
-
-from django.conf import settings  # Importa las configuraciones del proyecto desde settings.py
-
-from django.conf.urls.static import static  # Permite mostrar archivos media en desarrollo
+from recetas import views
 
 
-urlpatterns = [  # Lista principal de rutas del proyecto
+urlpatterns = [
 
-    path('admin/', admin.site.urls),  # Ruta del panel administrador -> /admin/
+    # Rutas de la aplicación
+    path(
+        '',
+        include('recetas.urls')
+    ),
 
-    path('', include('recetas.urls')),  # Incluye las rutas definidas en recetas/urls.py
+    path(
+        'accounts/registro/',
+        views.registro_usuario,
+        name='registro'
+    ),
 
-    path('accounts/', include('django.contrib.auth.urls')),
-    
+
+    # Login personalizado
+    path(
+        'accounts/login/',
+        views.login_usuario,
+        name='login'
+    ),
+
+    # Logout, cambio de contraseña, recuperar contraseña, etc.
+    path(
+        'accounts/',
+        include('django.contrib.auth.urls')
+    ),
+
+
+
+    # Si algún día querés volver a usar el admin
+    # path('admin/', admin.site.urls),
+
 ]
 
 
-urlpatterns += static(  # Agrega soporte para mostrar archivos media
+urlpatterns += static(
 
-    settings.MEDIA_URL,  # URL pública de acceso a archivos media
+    settings.MEDIA_URL,
 
-    document_root=settings.MEDIA_ROOT  # Carpeta física donde se guardan los archivos
+    document_root=settings.MEDIA_ROOT
+
 )

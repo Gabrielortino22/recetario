@@ -8,12 +8,18 @@ Recetario
 
     <h1>🍴 Recetas de Cocina</h1>
 
-    <a href="/crear/"
+{% if user.is_authenticated and user.perfil.rol == 'editor' %}
+
+    <a href="{% url 'crear' %}"
        class="nueva-receta">
 
-        + Nueva receta
+        ➕ Nueva receta
 
     </a>
+
+    <br><br>
+
+{% endif %}
 
     <br><br>
 
@@ -79,15 +85,19 @@ Recetario
 
             <br>
 
+            {% if user.perfil.rol == 'editor' %}
+
             <a href="/editar/{{ receta.id }}/">
-                ✏️ Editar
+                  ✏️ Editar
             </a>
 
             &nbsp;
 
             <a href="/eliminar/{{ receta.id }}/">
-                🗑️ Eliminar
+                 🗑️ Eliminar
             </a>
+
+            {% endif %}
 
         </div>
 

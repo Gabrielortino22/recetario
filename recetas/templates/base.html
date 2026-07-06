@@ -4,46 +4,53 @@
 <html lang="es">
 
 <head>
-
     <meta charset="UTF-8">
-
     <title>{% block titulo %}Recetario{% endblock %}</title>
 
-    <link rel="stylesheet"
-          href="{% static 'css/estilos.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
 
 <body class="fondo-receta">
 
- <nav class="navbar">
+<!-- NAVBAR FIJA -->
+<nav class="navbar">
 
     <div class="navbar-contenedor">
 
-       <div class="dropdown">
+        <!-- LOGO + DROPDOWN -->
+        <div class="dropdown">
 
-    <button class="logo-boton">
-        🍴 Recetario ▼
-    </button>
+            <button class="logo-boton">
+                🍴 Recetario ▼
+            </button>
 
-    <div class="dropdown-contenido">
+            <div class="dropdown-contenido">
 
-        <a href="{% url 'lista' %}">
-            Todas las recetas
-        </a>
+                <a href="{% url 'lista' %}">
+                    Todas las recetas
+                </a>
 
-        <a href="/?categoria=Dulce">
-            🍰 Recetas dulces
-        </a>
+                <a href="/?categoria=Dulce">
+                    🍰 Dulces
+                </a>
 
-        <a href="/?categoria=Salada">
-            🍕 Recetas saladas
-        </a>
+                <a href="/?categoria=Salada">
+                    🍕 Saladas
+                </a>
 
-    </div>
+                <a href="{% url 'prueba' %}">
+                    prueba
+                </a>
 
-</div>
+                <a href="{% url 'prueba_2' %}">
+                    prueba_2
+                </a>
 
+
+            </div>
+        </div>
+
+        <!-- MENU -->
         <div class="menu">
 
             {% if user.is_authenticated %}
@@ -52,12 +59,33 @@
                     🏠 Inicio
                 </a>
 
+                <!-- 👇 SOLO EDITOR -->
+                {% if user.perfil.rol == 'editor' %}
+
                 <a href="{% url 'crear' %}">
-                    ➕ Nueva receta
+                ➕ Nueva receta
                 </a>
 
-                <span class="usuario">
+                {% endif %}
+
+               <span class="usuario">
+
                     👋 {{ user.username }}
+
+                    {% if user.perfil.rol == 'editor' %}
+
+                        <span class="rol editor">
+                            🟢 Editor
+                        </span>
+
+                    {% else %}
+
+                        <span class="rol lector">
+                            🔵 Lector
+                        </span>
+
+                    {% endif %}
+
                 </span>
 
                 <form method="post"
@@ -84,31 +112,24 @@
 
     </div>
 
-</nav>   
+</nav>
 
+<!-- CONTENIDO -->
 <div class="contenedor">
 
     {% block contenido %}
     {% endblock %}
 
+    <!-- FOOTER -->
     <footer class="footer">
 
-        <p>
-            🍴 Recetario Django
-        </p>
-
-        <p>
-            Desarrollado por Gabriel Ortino
-        </p>
-
-        <p>
-            © 2026 - Todos los derechos reservados
-        </p>
+        <p>🍴 Recetario Django</p>
+        <p>Desarrollado por Gabriel Ortino</p>
+        <p>© 2026 - Todos los derechos reservados</p>
 
     </footer>
 
 </div>
 
 </body>
-
 </html>
