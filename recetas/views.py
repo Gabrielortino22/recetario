@@ -1,3 +1,6 @@
+from django.contrib.auth.models import User
+from django.http import HttpResponseForbidden
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -207,3 +210,61 @@ def registro_usuario(request):
         }
 
     )
+
+# =========================================================
+# LISTA DE USUARIOS
+# =========================================================
+
+@login_required
+def lista_usuarios(request):
+
+    if request.user.perfil.rol != "editor":
+
+        return HttpResponseForbidden("No tenés permiso para acceder.")
+
+    usuarios = User.objects.all()
+
+    return render(
+
+        request,
+
+        "usuarios.html",
+
+        {
+
+            "usuarios": usuarios
+
+        }
+
+    )
+
+
+# =========================================================
+# CAMBIAR ROL
+# =========================================================
+
+@login_required
+def cambiar_rol(request, id):
+
+    if request.user.perfil.rol != "editor":
+
+        return HttpResponseForbidden("No tenés permiso.")
+
+    usuario = get_object_or_404(User, id=id)
+
+    # Evita que el editor cambie su propio rol
+    if usuario == request.user:
+
+        return redirect("usuarios")
+
+    if usuario.perfil.rol == "lector":
+
+        usuario.perfil.rol = "editor"
+
+    else:
+
+        usuario.perfil.rol = "lector"
+
+    usuario.perfil.save()
+
+    return redirect("usuarios")

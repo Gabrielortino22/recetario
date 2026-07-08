@@ -488,3 +488,35 @@ img {
     color:white;
 
 }
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-top:20px;
+
+}
+
+th{
+
+    background:#007bff;
+
+    color:white;
+
+    padding:12px;
+
+}
+
+td{
+
+    background:white;
+
+    padding:12px;
+
+    text-align:center;
+
+    border-bottom:1px solid #ddd;
+
+}

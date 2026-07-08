@@ -1,20 +1,36 @@
-from django.urls import path  # Importa la función path para crear rutas URL desde el paquete principal de django y el modulo .urls
+from django.urls import path
 
-from . import views  # Importa el archivo views.py ubicado en la misma carpeta que urls.py para poder usar sus funciones
+from . import views
 
 
-urlpatterns = [  # Lista que contiene todas las rutas de la aplicación
+urlpatterns = [
 
-    path('', views.lista_recetas, name='lista'),  # Cuando se accede a la raíz (/) ejecuta la función lista_recetas y la ruta se llama 'lista'
+    path('', views.lista_recetas, name='lista'),
 
-    
-    path('crear/', views.crear_receta, name='crear'),  # URL /crear/ ejecuta la función crear_receta y la ruta se llama 'crear'
+    path('crear/', views.crear_receta, name='crear'),
 
-    path('prueba/', views.prueba_receta, name='prueba'),  # URL /crear/ ejecuta la función crear_receta y la ruta se llama 'crear'
+    path('prueba/', views.prueba_receta, name='prueba'),
 
-    path('prueba_2/', views.prueba_2_receta, name='prueba_2'),  # URL /crear/ ejecuta la función crear_receta y la ruta se llama 'crear'
+    path('prueba_2/', views.prueba_2_receta, name='prueba_2'),
 
-    path('editar/<int:id>/', views.editar_receta, name='editar'),  # URL /editar/1/ o /editar/5/ pasa el id a editar_receta
+    path('editar/<int:id>/', views.editar_receta, name='editar'),
 
-    path('eliminar/<int:id>/', views.eliminar_receta, name='eliminar'),  # URL /eliminar/1/ o /eliminar/5/ pasa el id a eliminar_receta
+    path('eliminar/<int:id>/', views.eliminar_receta, name='eliminar'),
+
+    # ==========================
+    # USUARIOS
+    # ==========================
+
+    path(
+        'usuarios/',
+        views.lista_usuarios,
+        name='usuarios'
+    ),
+
+    path(
+        'usuarios/cambiar/<int:id>/',
+        views.cambiar_rol,
+        name='cambiar_rol'
+    ),
+
 ]

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Usuarios
+{% endblock %}
+
+{% block contenido %}
+
+<h1>👥 Administración de Usuarios</h1>
+
+<div class="card">
+
+<table>
+
+    <tr>
+
+        <th>Usuario</th>
+
+        <th>Rol</th>
+
+        <th>Acción</th>
+
+    </tr>
+
+    {% for usuario in usuarios %}
+
+    <tr>
+
+        <td>
+
+            {{ usuario.username }}
+
+        </td>
+
+        <td>
+
+            {{ usuario.perfil.rol }}
+
+        </td>
+
+        <td>
+
+            {% if usuario != request.user %}
+
+                <a href="{% url 'cambiar_rol' usuario.id %}">
+
+                    🔄 Cambiar Rol
+
+                </a>
+
+            {% else %}
+
+                ----
+
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}
