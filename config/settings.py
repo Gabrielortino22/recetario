@@ -4,8 +4,12 @@ Django settings for config project.
 
 from pathlib import Path  #importa la clase Path, que sirve para trabajar con rutas (paths) de archivos y carpetas de una manera más simple y segura.
 
+import os
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent  # Guarda la ruta principal del proyecto
 
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production  # Configuración rápida para desarrollo
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/  # Documentación oficial
@@ -100,16 +104,25 @@ WSGI_APPLICATION = 'config.wsgi.application'  # Punto de entrada WSGI para produ
 # =========================================================
 # BASE DE DATOS
 # =========================================================
-
 DATABASES = {
+
     'default': {
 
-        'ENGINE': 'django.db.backends.sqlite3',  # Usa SQLite como motor de base de datos
+        'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': BASE_DIR / 'db.sqlite3',  # Nombre y ubicación de la base de datos
+        'NAME': os.getenv('DB_NAME'),
+
+        'USER': os.getenv('DB_USER'),
+
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+
+        'HOST': os.getenv('DB_HOST'),
+
+        'PORT': os.getenv('DB_PORT'),
+
     }
-}
 
+}
 
 # =========================================================
 # VALIDADORES DE CONTRASEÑAS

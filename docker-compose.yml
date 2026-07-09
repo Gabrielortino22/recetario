@@ -1,0 +1,57 @@
+services:
+
+  db:
+
+    image: postgres:16
+
+    container_name: postgres_recetario
+
+    restart: always
+
+    environment:
+
+      POSTGRES_DB: recetario_db
+
+      POSTGRES_USER: recetario_user
+
+      POSTGRES_PASSWORD: 123456
+
+    ports:
+
+      - "5432:5432"
+
+    volumes:
+
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+
+    build: .
+
+    container_name: django_recetario
+
+    command: python manage.py runserver 0.0.0.0:8000
+
+    volumes:
+
+      - .:/app
+
+    ports:
+
+      - "8000:8000"
+
+    depends_on:
+
+      - db
+
+    environment:
+
+      DB_NAME: recetario_db
+      DB_USER: recetario_user
+      DB_PASSWORD: 123456
+      DB_HOST: db
+      DB_PORT: 5432
+
+volumes:
+
+  postgres_data:
