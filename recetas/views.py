@@ -11,12 +11,6 @@ from django.contrib import messages
 
 from .forms import RegistroForm
 
-def prueba_receta(request):
-    return render(request, 'prueba.html')
-
-
-def prueba_2_receta(request):
-    return render(request, 'prueba_2.html')
 
 
 # =========================================================
