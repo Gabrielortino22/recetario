@@ -1,15 +1,24 @@
-from django.contrib.auth.models import User
-from django.http import HttpResponseForbidden
+from django.contrib.auth.models import User          # Importa el modelo User de Django para trabajar con los usuarios.
+
+from django.http import HttpResponseForbidden        # Permite devolver un error 403 cuando un usuario no tiene permisos.
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+# render: muestra una plantilla HTML.
+# redirect: redirige al usuario a otra página.
+# get_object_or_404: busca un objeto y devuelve un error 404 si no existe.
 
-from .models import Receta, Perfil
+from django.contrib.auth.decorators import login_required
+# Decorador que obliga a que el usuario haya iniciado sesión.
+
+from .models import Receta, Perfil                  # Importa los modelos Receta y Perfil.
 
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
+# authenticate: verifica si el usuario y contraseña son correctos.
+# login: inicia la sesión del usuario.
 
-from .forms import RegistroForm
+from django.contrib import messages                 # Permite mostrar mensajes en la aplicación (éxito, error, aviso, etc.).
+
+from .forms import RegistroForm                     # Importa el formulario de registro de usuarios.
 
 
 
@@ -17,167 +26,187 @@ from .forms import RegistroForm
 # LISTAR RECETAS
 # =========================================================
 
-def lista_recetas(request):
+def lista_recetas(request):                         # Vista que muestra todas las recetas.
 
-    categoria = request.GET.get('categoria')
+    categoria = request.GET.get('categoria')        # Obtiene el valor del parámetro "categoria" enviado por la URL.
 
-    if categoria:
+    if categoria:                                   # Si el usuario seleccionó una categoría...
 
         recetas = Receta.objects.filter(categoria=categoria)
+        # Busca únicamente las recetas que pertenecen a esa categoría.
 
-    else:
+    else:                                           # Si no seleccionó ninguna categoría...
 
-        recetas = Receta.objects.all()
+        recetas = Receta.objects.all()              # Obtiene todas las recetas de la base de datos.
 
-    return render(request, 'lista.html', {'recetas': recetas})
-
-
+    return render(
+        request,                                    # Envía la petición actual.
+        'lista.html',                               # Plantilla HTML que se mostrará.
+        {'recetas': recetas}                        # Envía la lista de recetas a la plantilla.
+    )
 # =========================================================
 # CREAR RECETA
 # =========================================================
 
-@login_required
-def crear_receta(request):
+@login_required                              # Obliga a que el usuario haya iniciado sesión.
+def crear_receta(request):                   # Vista encargada de crear una nueva receta.
 
     # SOLO LOS EDITORES PUEDEN CREAR
-    if request.user.perfil.rol != "editor":
-        return redirect("lista")
+    if request.user.perfil.rol != "editor":  # Verifica si el usuario NO es editor.
 
-    if request.method == 'POST':
+        return redirect("lista")             # Si no es editor, lo envía nuevamente a la lista de recetas.
 
-        Receta.objects.create(
+    if request.method == 'POST':             # Comprueba si el formulario fue enviado.
 
-            titulo=request.POST['titulo'],
+        Receta.objects.create(               # Crea un nuevo registro en la tabla Receta.
 
-            categoria=request.POST['categoria'],
+            titulo=request.POST['titulo'],           # Guarda el título ingresado.
 
-            ingredientes=request.POST['ingredientes'],
+            categoria=request.POST['categoria'],     # Guarda la categoría seleccionada.
 
-            preparacion=request.POST['preparacion'],
+            ingredientes=request.POST['ingredientes'], # Guarda los ingredientes.
 
-            imagen=request.FILES.get('imagen'),
+            preparacion=request.POST['preparacion'],   # Guarda la preparación.
 
-            video=request.FILES.get('video')
+            imagen=request.FILES.get('imagen'),      # Guarda la imagen subida (si existe).
+
+            video=request.FILES.get('video')         # Guarda el video subido (si existe).
 
         )
 
-        return redirect('lista')
+        return redirect('lista')            # Una vez creada la receta vuelve a la lista.
 
-    return render(request, 'crear.html')
-
-
+    return render(                          # Si el usuario aún no envió el formulario...
+        request,                            # Envía la petición.
+        'crear.html'                        # Muestra la plantilla crear.html.
+    )
 # =========================================================
 # EDITAR RECETA
 # =========================================================
 
-@login_required
-def editar_receta(request, id):
+@login_required                              # Solo usuarios autenticados pueden editar.
+def editar_receta(request, id):              # Vista que edita una receta.
 
     # SOLO LOS EDITORES PUEDEN EDITAR
-    if request.user.perfil.rol != "editor":
-        return redirect("lista")
+    if request.user.perfil.rol != "editor":  # Comprueba que el usuario sea editor.
 
-    receta = get_object_or_404(Receta, id=id)
+        return redirect("lista")             # Si no lo es, vuelve a la lista.
 
-    if request.method == 'POST':
+    receta = get_object_or_404(              # Busca la receta...
+        Receta,
+        id=id                                # ...por su ID.
+    )
 
-        receta.titulo = request.POST['titulo']
+    if request.method == 'POST':             # Si el formulario fue enviado...
 
-        receta.categoria = request.POST['categoria']
+        receta.titulo = request.POST['titulo']               # Actualiza el título.
 
-        receta.ingredientes = request.POST['ingredientes']
+        receta.categoria = request.POST['categoria']         # Actualiza la categoría.
 
-        receta.preparacion = request.POST['preparacion']
+        receta.ingredientes = request.POST['ingredientes']   # Actualiza los ingredientes.
 
-        if request.FILES.get('imagen'):
+        receta.preparacion = request.POST['preparacion']     # Actualiza la preparación.
 
-            receta.imagen = request.FILES.get('imagen')
+        if request.FILES.get('imagen'):      # Si el usuario subió una nueva imagen...
 
-        if request.FILES.get('video'):
+            receta.imagen = request.FILES.get('imagen')  # Reemplaza la imagen anterior.
 
-            receta.video = request.FILES.get('video')
+        if request.FILES.get('video'):       # Si subió un nuevo video...
 
-        receta.save()
+            receta.video = request.FILES.get('video')    # Reemplaza el video anterior.
 
-        return redirect('lista')
+        receta.save()                        # Guarda todos los cambios en la base de datos.
 
-    return render(request, 'editar.html', {'receta': receta})
+        return redirect('lista')             # Regresa a la lista de recetas.
 
-
+    return render(                           # Si todavía no envió el formulario...
+        request,
+        'editar.html',                       # Muestra la plantilla editar.html.
+        {'receta': receta}                   # Envía la receta para completar el formulario.
+    )
 # =========================================================
 # ELIMINAR RECETA
 # =========================================================
 
-@login_required
-def eliminar_receta(request, id):
+@login_required                              # Solo los usuarios que iniciaron sesión pueden acceder.
+def eliminar_receta(request, id):            # Vista que elimina una receta.
 
     # SOLO LOS EDITORES PUEDEN ELIMINAR
-    if request.user.perfil.rol != "editor":
-        return redirect("lista")
+    if request.user.perfil.rol != "editor":  # Verifica si el usuario NO es editor.
 
-    receta = get_object_or_404(Receta, id=id)
+        return redirect("lista")             # Si no es editor, vuelve a la lista.
 
-    receta.delete()
+    receta = get_object_or_404(              # Busca la receta por su ID.
+        Receta,
+        id=id
+    )
 
-    return redirect('lista')
+    receta.delete()                          # Elimina la receta de la base de datos.
 
+    return redirect('lista')                 # Regresa a la lista de recetas.
 # =========================================================
 # LOGIN PERSONALIZADO
 # =========================================================
 
-def login_usuario(request):
+def login_usuario(request):                  # Vista que permite iniciar sesión.
 
-    if request.user.is_authenticated:
-        return redirect("lista")
+    if request.user.is_authenticated:        # Comprueba si el usuario ya inició sesión.
 
-    if request.method == "POST":
+        return redirect("lista")             # Si ya inició sesión, lo envía a la página principal.
 
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+    if request.method == "POST":             # Si el formulario fue enviado...
 
-        user = authenticate(
+        username = request.POST.get("username")   # Obtiene el nombre de usuario.
+
+        password = request.POST.get("password")   # Obtiene la contraseña.
+
+        user = authenticate(                 # Verifica si los datos son correctos.
             request,
             username=username,
             password=password
         )
 
-        if user is not None:
+        if user is not None:                 # Si el usuario existe...
 
-            login(request, user)
+            login(request, user)             # Inicia la sesión.
 
-            return redirect("lista")
+            return redirect("lista")         # Lo redirige a la lista de recetas.
 
-        else:
+        else:                                # Si el usuario o contraseña son incorrectos...
 
-            messages.error(
+            messages.error(                  # Muestra un mensaje de error.
+
                 request,
+
                 "Usuario o contraseña incorrectos."
+
             )
 
-    return render(
+    return render(                           # Muestra la plantilla de login.
         request,
-        "registration/login.html"
-    )
 
+        "registration/login.html"
+
+    )
 # =========================================================
 # REGISTRO DE USUARIOS
 # =========================================================
 
-def registro_usuario(request):
+def registro_usuario(request):               # Vista que registra nuevos usuarios.
 
-    if request.user.is_authenticated:
+    if request.user.is_authenticated:        # Comprueba si el usuario ya inició sesión.
 
-        return redirect('lista')
+        return redirect('lista')             # Si ya inició sesión, vuelve a la lista.
 
-    if request.method == 'POST':
+    if request.method == 'POST':             # Si el formulario fue enviado...
 
-        form = RegistroForm(request.POST)
+        form = RegistroForm(request.POST)    # Crea el formulario con los datos recibidos.
 
-        if form.is_valid():
+        if form.is_valid():                  # Verifica que los datos sean válidos.
 
-            form.save()
+            form.save()                      # Guarda el nuevo usuario en la base de datos.
 
-            messages.success(
+            messages.success(                # Muestra un mensaje de éxito.
 
                 request,
 
@@ -185,13 +214,13 @@ def registro_usuario(request):
 
             )
 
-            return redirect('login')
+            return redirect('login')         # Redirige al login.
 
-    else:
+    else:                                    # Si todavía no envió el formulario...
 
-        form = RegistroForm()
+        form = RegistroForm()                # Crea un formulario vacío.
 
-    return render(
+    return render(                           # Muestra la plantilla de registro.
 
         request,
 
@@ -199,66 +228,71 @@ def registro_usuario(request):
 
         {
 
-            'form': form
+            'form': form                     # Envía el formulario a la plantilla.
 
         }
 
     )
-
 # =========================================================
 # LISTA DE USUARIOS
 # =========================================================
 
-@login_required
-def lista_usuarios(request):
+@login_required                                  # Solo los usuarios que iniciaron sesión pueden acceder.
+def lista_usuarios(request):                     # Vista que muestra todos los usuarios registrados.
 
-    if request.user.perfil.rol != "editor":
+    if request.user.perfil.rol != "editor":      # Comprueba si el usuario NO tiene el rol Editor.
 
-        return HttpResponseForbidden("No tenés permiso para acceder.")
+        return HttpResponseForbidden(            # Devuelve un error 403 (Acceso prohibido).
+            "No tenés permiso para acceder."
+        )
 
-    usuarios = User.objects.all()
+    usuarios = User.objects.all()                # Obtiene todos los usuarios de la base de datos.
 
-    return render(
-
+    return render(                               # Muestra la plantilla HTML.
         request,
 
-        "usuarios.html",
+        "usuarios.html",                         # Plantilla que muestra la lista de usuarios.
 
         {
 
-            "usuarios": usuarios
+            "usuarios": usuarios                 # Envía la lista de usuarios a la plantilla.
 
         }
 
     )
-
-
 # =========================================================
 # CAMBIAR ROL
 # =========================================================
 
-@login_required
-def cambiar_rol(request, id):
+@login_required                                  # Solo usuarios autenticados pueden acceder.
+def cambiar_rol(request, id):                    # Vista que cambia el rol de un usuario.
 
-    if request.user.perfil.rol != "editor":
+    if request.user.perfil.rol != "editor":      # Verifica que quien realiza la acción sea Editor.
 
-        return HttpResponseForbidden("No tenés permiso.")
+        return HttpResponseForbidden(            # Si no tiene permisos devuelve un error 403.
 
-    usuario = get_object_or_404(User, id=id)
+            "No tenés permiso."
+
+        )
+
+    usuario = get_object_or_404(                 # Busca el usuario por su ID.
+        User,
+        id=id
+    )
 
     # Evita que el editor cambie su propio rol
-    if usuario == request.user:
+    if usuario == request.user:                  # Comprueba si intenta modificar su propio usuario.
 
-        return redirect("usuarios")
+        return redirect("usuarios")              # Si es así, vuelve a la lista de usuarios.
 
-    if usuario.perfil.rol == "lector":
+    if usuario.perfil.rol == "lector":           # Si el usuario es Lector...
 
-        usuario.perfil.rol = "editor"
+        usuario.perfil.rol = "editor"            # Lo convierte en Editor.
 
-    else:
+    else:                                        # Si ya era Editor...
 
-        usuario.perfil.rol = "lector"
+        usuario.perfil.rol = "lector"            # Lo convierte en Lector.
 
-    usuario.perfil.save()
+    usuario.perfil.save()                        # Guarda el nuevo rol en la base de datos.
 
-    return redirect("usuarios")
+    return redirect("usuarios")                  # Regresa a la lista de usuarios.

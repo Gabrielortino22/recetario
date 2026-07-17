@@ -1,6 +1,6 @@
-from django.contrib import admin
+from django.contrib import admin             # Importa el módulo de administración de Django.
 
-from .models import Receta, Perfil
+from .models import Receta, Perfil           # Importa los modelos Receta y Perfil desde models.py.
 
 
 
@@ -8,30 +8,30 @@ from .models import Receta, Perfil
 # ADMINISTRACIÓN DE RECETAS
 # =====================================================
 
-@admin.register(Receta)
-class RecetaAdmin(admin.ModelAdmin):
+@admin.register(Receta)                      # Registra el modelo Receta en el panel de administración.
+class RecetaAdmin(admin.ModelAdmin):         # Crea una clase para personalizar cómo se muestran las recetas.
 
-    list_display = (
+    list_display = (                         # Define las columnas que aparecerán en la lista de recetas.
 
-        'titulo',
+        'titulo',                            # Muestra el título de la receta.
 
-        'categoria',
+        'categoria',                         # Muestra la categoría (Dulce o Salada).
 
-        'fecha'
-
-    )
-
-    search_fields = (
-
-        'titulo',
-
-        'ingredientes'
+        'fecha'                              # Muestra la fecha de creación.
 
     )
 
-    list_filter = (
+    search_fields = (                        # Campos sobre los que funcionará el buscador del administrador.
 
-        'categoria',
+        'titulo',                            # Permite buscar recetas por el título.
+
+        'ingredientes'                       # Permite buscar recetas por los ingredientes.
+
+    )
+
+    list_filter = (                          # Agrega filtros en el lateral derecho del administrador.
+
+        'categoria',                         # Permite filtrar las recetas por categoría.
 
     )
 
@@ -40,26 +40,27 @@ class RecetaAdmin(admin.ModelAdmin):
 # ADMINISTRACIÓN DE PERFILES
 # =====================================================
 
-@admin.register(Perfil)
-class PerfilAdmin(admin.ModelAdmin):
+@admin.register(Perfil)                      # Registra el modelo Perfil en el panel de administración.
+class PerfilAdmin(admin.ModelAdmin):         # Personaliza cómo se mostrarán los perfiles.
 
-    list_display = (
+    list_display = (                         # Columnas que aparecerán en la lista de perfiles.
 
-        'usuario',
+        'usuario',                           # Muestra el nombre del usuario.
 
-        'rol',
-
-    )
-
-    list_filter = (
-
-        'rol',
+        'rol',                               # Muestra el rol del usuario (Administrador o Lector).
 
     )
 
-    search_fields = (
+    list_filter = (                          # Agrega filtros para los perfiles.
 
-        'usuario__username',
+        'rol',                               # Permite filtrar por tipo de rol.
+
+    )
+
+    search_fields = (                        # Habilita el buscador para los perfiles.
+
+        'usuario__username',                 # Busca por el nombre de usuario relacionado.
+                                             # usuario__username accede al campo username del modelo User.
 
     )
 
@@ -68,8 +69,8 @@ class PerfilAdmin(admin.ModelAdmin):
 # PERSONALIZACIÓN DEL PANEL
 # =====================================================
 
-admin.site.site_header = "Administración del Recetario"
+admin.site.site_header = "Administración del Recetario"   # Cambia el título que aparece en la parte superior del panel.
 
-admin.site.site_title = "Panel Recetas"
+admin.site.site_title = "Panel Recetas"                   # Cambia el título que aparece en la pestaña del navegador.
 
-admin.site.index_title = "Bienvenido al panel de recetas"
+admin.site.index_title = "Bienvenido al panel de recetas" # Cambia el texto de bienvenida en la página principal del administrador.

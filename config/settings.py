@@ -1,16 +1,25 @@
 """
 Django settings for config project.
 """  # Archivo principal de configuración del proyecto Django
+from pathlib import Path          # Importa la clase Path para trabajar con rutas de archivos y carpetas de forma segura y compatible con distintos sistemas operativos.
 
-from pathlib import Path  #importa la clase Path, que sirve para trabajar con rutas (paths) de archivos y carpetas de una manera más simple y segura.
+import os                         # Importa el módulo os, que permite interactuar con el sistema operativo y acceder a variables de entorno.
 
-import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv    # Importa la función load_dotenv, que carga las variables almacenadas en un archivo .env.
 
-BASE_DIR = Path(__file__).resolve().parent.parent  # Guarda la ruta principal del proyecto
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+# __file__ representa la ubicación del archivo settings.py.
+# resolve() obtiene la ruta absoluta.
+# parent sube un nivel de carpeta.
+# parent.parent sube dos niveles.
+# El resultado es la carpeta principal del proyecto (BASE_DIR).
+
 
 load_dotenv(BASE_DIR / ".env")
-
+# Busca el archivo ".env" dentro de la carpeta principal del proyecto
+# y carga todas las variables de entorno que contiene para poder
+# utilizarlas desde el código mediante os.getenv().
 # Quick-start development settings - unsuitable for production  # Configuración rápida para desarrollo
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/  # Documentación oficial
 
@@ -19,7 +28,7 @@ SECRET_KEY = 'django-insecure-dx=we3bj4hp8(*ee*(%ha5-78_6oj^v8@)$qaocgc2&v!_2^%n
 
 DEBUG = True  # Muestra errores detallados mientras desarrollás
 
-ALLOWED_HOSTS = []  # Lista de dominios permitidos
+ALLOWED_HOSTS = ['*']  # Lista de dominios permitidos
 
 
 # =========================================================
@@ -165,18 +174,38 @@ USE_TZ = True  # Activa soporte de zonas horarias
 # ARCHIVOS ESTÁTICOS
 # =========================================================
 
-STATIC_URL = 'static/'  # URL para acceder a archivos estáticos
+STATIC_URL = 'static/'                 
+# Define la URL pública para acceder a los archivos estáticos
+# como CSS, JavaScript e imágenes del diseño.
 
-MEDIA_URL = '/media/'  # URL para acceder a archivos subidos
+MEDIA_URL = '/media/'                  
+# Define la URL pública para acceder a los archivos que suben
+# los usuarios, por ejemplo imágenes o videos de recetas.
 
-MEDIA_ROOT = BASE_DIR / 'media'  # Carpeta física donde se guardan los archivos media
+MEDIA_ROOT = BASE_DIR / 'media'        
+# Indica la carpeta física donde Django guardará los archivos
+# multimedia que suban los usuarios.
 
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/accounts/login/'         
+# Especifica la página de inicio de sesión.
+# Si un usuario intenta acceder a una vista protegida con
+# @login_required sin estar autenticado, será redirigido aquí.
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'               
+# Después de iniciar sesión correctamente,
+# el usuario será redirigido a la página principal.
 
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'              
+# Después de cerrar sesión, inicialmente estaba configurado
+# para volver a la página principal.
 
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'  
+# Esta línea reemplaza la configuración anterior.
+# Ahora, después de cerrar sesión, el usuario será enviado
+# a la página de login.
+# Como aparece dos veces, la primera configuración ya no tiene efecto.
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Configura el sistema de correo de Django para que,
+# en lugar de enviar emails reales, los muestre en la consola.
+# Es muy útil durante el desarrollo y las pruebas.
