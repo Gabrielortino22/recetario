@@ -1,31 +1,97 @@
 # 🍴 Recetario Django
 
-Aplicación web desarrollada con **Python y Django** como proyecto final de la Diplomatura en Desarrollo Web.
+Aplicación web desarrollada con **Python**, **Django**, **PostgreSQL** y **Docker** como proyecto final de la **Diplomatura en Desarrollo Web**.
 
-Permite administrar un recetario de cocina mediante un sistema de usuarios con distintos roles.
+La aplicación permite gestionar un recetario de cocina mediante un sistema de autenticación con distintos tipos de usuarios, permitiendo administrar recetas con imágenes y videos.
 
 ---
 
-# 📌 Características
+# 📋 Características
 
-- ✅ Registro de usuarios
-- ✅ Inicio de sesión personalizado
-- ✅ Recuperación de contraseña
-- ✅ Dos tipos de usuarios:
-  - 📖 Lector
-  - ✏️ Editor
-- ✅ Crear recetas
-- ✅ Editar recetas
-- ✅ Eliminar recetas
-- ✅ Subir imágenes
-- ✅ Subir videos
-- ✅ Clasificación por categorías
-  - 🍰 Dulces
-  - 🍕 Saladas
-- ✅ Interfaz responsive
-- ✅ Barra de navegación
-- ✅ Menú desplegable
-- ✅ Gestión de usuarios
+- Registro de usuarios.
+- Inicio de sesión personalizado.
+- Recuperación de contraseña.
+- Sistema de roles (Lector y Editor).
+- Creación de recetas.
+- Edición de recetas.
+- Eliminación de recetas.
+- Carga de imágenes.
+- Carga de videos.
+- Clasificación por categorías.
+- Gestión de usuarios.
+- Diseño responsive.
+- Barra de navegación.
+- Menú desplegable.
+
+---
+
+# 👤 Roles del sistema
+
+La aplicación posee dos tipos de usuarios.
+
+## 📖 Lector
+
+Puede:
+
+- Ver recetas.
+- Ver imágenes.
+- Ver videos.
+
+No puede modificar información.
+
+---
+
+## ✏️ Editor
+
+Puede:
+
+- Crear recetas.
+- Editar recetas.
+- Eliminar recetas.
+- Administrar usuarios.
+
+Los usuarios con rol **Editor** se generan automáticamente cuando se crea un superusuario utilizando el comando:
+
+```bash
+docker compose exec web python manage.py createsuperuser
+```
+
+El sistema detecta que es un superusuario y crea automáticamente su perfil con el rol **Editor**.
+
+---
+
+# 🍽 Información de cada receta
+
+Cada receta contiene:
+
+- Título
+- Categoría
+- Ingredientes
+- Preparación
+- Imagen
+- Video
+
+Las categorías disponibles son:
+
+- 🍰 Dulce
+- 🍕 Salada
+
+---
+
+# 🔐 Sistema de autenticación
+
+La aplicación utiliza el sistema de autenticación de Django.
+
+Los usuarios pueden:
+
+- Registrarse.
+- Iniciar sesión.
+- Recuperar contraseña.
+- Cerrar sesión.
+
+Al registrarse desde la aplicación, el sistema crea automáticamente un perfil con el rol **Lector**.
+
+Al crear un superusuario mediante el comando `createsuperuser`, el sistema crea automáticamente un perfil con el rol **Editor**.
 
 ---
 
@@ -38,13 +104,12 @@ Permite administrar un recetario de cocina mediante un sistema de usuarios con d
 - HTML5
 - CSS3
 - JavaScript
-- Bootstrap (componentes utilizados)
 - Git
 - GitHub
 
 ---
 
-# 📂 Estructura del proyecto
+# 📁 Estructura del proyecto
 
 ```
 recetario/
@@ -52,119 +117,77 @@ recetario/
 ├── config/
 │   ├── settings.py
 │   ├── urls.py
+│   ├── asgi.py
 │   └── wsgi.py
 │
 ├── recetas/
 │   ├── migrations/
-│   ├── templates/
 │   ├── static/
+│   ├── templates/
 │   ├── models.py
 │   ├── views.py
 │   ├── urls.py
-│   └── forms.py
+│   ├── forms.py
+│   └── signals.py
 │
 ├── media/
 │
 ├── static/
 │
-├── docker-compose.yml
 ├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
 ├── manage.py
-└── requirements.txt
+└── README.md
 ```
 
 ---
 
-# 👤 Roles del sistema
+# ⚙ Instalación
 
-## 📖 Lector
-
-Puede:
-
-- Ver recetas
-- Ver imágenes
-- Ver videos
-
-No puede modificar información.
-
----
-
-## ✏️ Editor
-
-Puede:
-
-- Crear recetas
-- Editar recetas
-- Eliminar recetas
-- Administrar usuarios
-
----
-
-# 📸 Cada receta contiene
-
-- Título
-- Categoría
-- Ingredientes
-- Preparación
-- Imagen
-- Video
-
----
-
-# 🔐 Sistema de autenticación
-
-La aplicación utiliza el sistema de autenticación de Django.
-
-Los usuarios pueden:
-
-- Registrarse
-- Iniciar sesión
-- Recuperar contraseña
-- Cerrar sesión
-
-Cada usuario posee un perfil con un rol (Lector o Editor) que determina los permisos disponibles.
-
----
-
-# 🗄 Base de datos
-
-La aplicación utiliza PostgreSQL ejecutándose mediante Docker.
-
----
-
-# ▶ Instalación
-
-Clonar el repositorio
+## 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/Gabrielortino22/recetario.git
 ```
 
-Ingresar al proyecto
+Ingresar al proyecto.
 
 ```bash
 cd recetario
 ```
 
-Levantar Docker
+---
+
+## 2. Levantar Docker
 
 ```bash
 docker compose up --build
 ```
 
-Aplicar migraciones
+---
+
+## 3. Aplicar las migraciones
 
 ```bash
 docker compose exec web python manage.py migrate
 ```
 
-Crear un superusuario
+---
+
+## 4. Crear un usuario Editor
 
 ```bash
 docker compose exec web python manage.py createsuperuser
 ```
 
-Ejecutar la aplicación
+El sistema asignará automáticamente el rol **Editor** al usuario creado.
+
+---
+
+## 5. Ejecutar la aplicación
+
+Abrir el navegador y acceder a:
 
 ```
 http://localhost:8000
@@ -172,46 +195,60 @@ http://localhost:8000
 
 ---
 
-# 📷 Capturas
+# 🚀 Primer uso
 
-## Login
+Una vez iniciado el proyecto:
 
-- Inicio de sesión
-- Registro
-- Recuperación de contraseña
+1. Crear un superusuario.
+2. Iniciar sesión.
+3. El usuario tendrá automáticamente permisos de **Editor**.
+4. Crear las primeras recetas.
+5. Registrar nuevos usuarios desde la aplicación.
 
-## Inicio
+Los usuarios registrados desde la aplicación tendrán el rol **Lector** por defecto.
 
-- Listado de recetas
+---
 
-## Nueva receta
+# 🗄 Base de datos
 
-- Formulario para crear recetas
+La aplicación utiliza PostgreSQL ejecutándose dentro de Docker.
 
-## Editar receta
+Las migraciones permiten crear automáticamente todas las tablas necesarias.
 
-- Modificación de datos
+---
 
-## Usuarios
+# 📸 Funcionalidades principales
 
-- Administración de usuarios
+- Inicio de sesión.
+- Registro de usuarios.
+- Recuperación de contraseña.
+- Listado de recetas.
+- Creación de recetas.
+- Edición de recetas.
+- Eliminación de recetas.
+- Visualización de imágenes.
+- Reproducción de videos.
+- Administración de usuarios.
 
 ---
 
 # 🎯 Objetivo del proyecto
 
-Desarrollar una aplicación web completa utilizando Django, aplicando los conceptos aprendidos durante la Diplomatura:
+Desarrollar una aplicación web completa utilizando Django aplicando los conocimientos adquiridos durante la Diplomatura.
 
-- Arquitectura MVT
-- Modelos
-- Vistas
-- Templates
-- Autenticación
-- Permisos
-- Base de datos PostgreSQL
-- Docker
-- Archivos estáticos
-- Archivos multimedia
+Se implementaron los siguientes conceptos:
+
+- Arquitectura MVT.
+- Modelos.
+- Vistas.
+- Templates.
+- Sistema de autenticación.
+- Permisos mediante roles.
+- PostgreSQL.
+- Docker.
+- Archivos estáticos.
+- Archivos multimedia.
+- Signals de Django para crear automáticamente perfiles de usuario.
 
 ---
 

@@ -9,7 +9,15 @@ from .models import Perfil
 def crear_perfil(sender, instance, created, **kwargs):
 
     if created:
-        Perfil.objects.create(usuario=instance)
+
+        # Si es un superusuario será Editor.
+        # Si no, será Lector.
+        rol = "editor" if instance.is_superuser else "lector"
+
+        Perfil.objects.create(
+            usuario=instance,
+            rol=rol
+        )
 
 
 @receiver(post_save, sender=User)
