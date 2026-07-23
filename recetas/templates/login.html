@@ -7,7 +7,7 @@
 
     <meta charset="UTF-8">
 
-    <title>Iniciar sesión</title>
+    <title>Recetario | Iniciar sesión</title>
 
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 
@@ -15,102 +15,148 @@
 
 <body class="login-body">
 
-<div class="login-wrapper">
+    <div class="login-wrapper">
 
-    <div class="login-card">
+        <div class="login-card">
 
-        <h1>🍴 Recetario</h1>
+            <h1>🍴 Recetario</h1>
 
-        <p class="sub">
-            Iniciá sesión
-        </p>
+            <p class="sub">
+                Bienvenido. Iniciá sesión para continuar.
+            </p>
 
-        {% if messages %}
+            {% if messages %}
 
-            {% for message in messages %}
+                {% for message in messages %}
 
-                <p class="error">
-                    {{ message }}
-                </p>
+                    <p class="error">
+                        {{ message }}
+                    </p>
 
-            {% endfor %}
+                {% endfor %}
 
-        {% endif %}
+            {% endif %}
 
-        <form method="post" action="{% url 'login' %}">
+            <form method="post" action="{% url 'login' %}">
 
-            {% csrf_token %}
+                {% csrf_token %}
 
-            <label for="username">Usuario</label>
-
-            <input
-                type="text"
-                id="username"
-                name="username"
-                required
-            >
-
-            <label for="pass">Contraseña</label>
-
-            <input
-                type="password"
-                id="pass"
-                name="password"
-                required
-            >
-
-            <label class="mostrar-password">
+                <label for="username">
+                    Usuario
+                </label>
 
                 <input
-                    type="checkbox"
-                    onclick="togglePass()"
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Ingrese su usuario"
+                    required
                 >
 
-                👁 Mostrar contraseña
+                <label for="pass">
+                    Contraseña
+                </label>
 
-            </label>
+                <input
+                    type="password"
+                    id="pass"
+                    name="password"
+                    placeholder="Ingrese su contraseña"
+                    required
+                >
 
-            <br><br>
+                <label class="mostrar-password">
 
-            <label for="rol">Ingresar como</label>
+                    <input
+                        type="checkbox"
+                        onclick="togglePass()"
+                    >
 
-            <select id="rol" name="rol" required>
+                    👁 Mostrar contraseña
 
-                <option value="lector" selected>
-                    Lector
-                </option>
+                </label>
 
-                <option value="editor">
-                    Editor
-                </option>
+                <br><br>
 
-            </select>
+                <label for="rol">
+                    Ingresar como
+                </label>
 
-            <br><br>
+                <select
+                    id="rol"
+                    name="rol"
+                    required
+                >
 
-            <button type="submit">
-                Ingresar
-            </button>
+                    <option value="lector" selected>
+                        📖 Lector
+                    </option>
 
-            <br><br>
+                    <option value="editor">
+                        ✏️ Editor
+                    </option>
 
-            <a href="{% url 'password_reset' %}">
-                ¿Olvidaste tu contraseña?
-            </a>
+                </select>
 
-        </form>
+                <br><br>
+
+                <button
+                    type="submit"
+                    class="btn-login"
+                >
+
+                    🔐 Ingresar
+
+                </button>
+
+            </form>
+
+            <br>
+
+            <div class="registro-container">
+
+                <a
+                    href="{% url 'registro' %}"
+                    class="btn-registro"
+                >
+
+                    📝 Registrarse
+
+                </a>
+
+            </div>
+
+            <br>
+
+            <div class="recuperar-password">
+
+                <a href="{% url 'password_reset' %}">
+
+                    ¿Olvidaste tu contraseña?
+
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
-</div>
-
 <script>
 
-function togglePass() {
+function togglePass(){
 
     let p = document.getElementById("pass");
 
-    p.type = (p.type === "password") ? "text" : "password";
+    if(p.type === "password"){
+
+        p.type = "text";
+
+    }else{
+
+        p.type = "password";
+
+    }
 
 }
 

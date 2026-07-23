@@ -75,19 +75,19 @@ Editar Receta
         <br><br>
 
         <!-- VIDEO ACTUAL -->
-        {% if receta.video %}
+{% if receta.video %}
 
-            <video width="100%" controls>
+    <p><strong>Video actual:</strong></p>
 
-                <source src="{{ receta.video.url }}">
+    <video class="video-mini" controls>
 
-                Tu navegador no soporta video.
+        <source src="{{ receta.video.url }}" type="video/mp4">
 
-            </video>
+        Tu navegador no soporta video.
 
-            <br><br>
+    </video>
 
-        {% endif %}
+{% endif %}
 
         <label>Video</label>
 

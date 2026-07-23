@@ -27,6 +27,10 @@ Recetario
 
         <div class="card">
 
+             <h2 class="titulo-receta">
+                 {{ receta.titulo }}
+            </h2>
+
             {% if receta.imagen %}
 
                 <img src="{{ receta.imagen.url }}"
@@ -59,7 +63,7 @@ Recetario
 
             {% endif %}
 
-            <h2>{{ receta.titulo }}</h2>
+            
 
             {% if receta.categoria == 'Dulce' %}
 

@@ -1,451 +1,742 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: none;
+/*==================================================
+=                    RESET                         =
+==================================================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* =========================
-   FONDO NETFLIX
-========================= */
+:root{
 
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    --principal:#e67e22;
+    --principal-hover:#d35400;
 
-    /* ⚠️ IMPORTANTE: Django static correcto */
-    background-image: url("/static/img/frutas.jpg");
+    --azul:#2980b9;
+    --azul-hover:#1f6391;
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    --verde:#27ae60;
+    --verde-hover:#1e8449;
 
-    filter: brightness(0.4) blur(2px);
-    z-index: -2;
+    --rosa:#ff69b4;
+    --naranja:#ff9800;
+
+    --texto:#444;
+    --blanco:#fff;
+
 }
 
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    background: rgba(0,0,0,0.45);
-    z-index: -1;
+body{
+    font-family:Arial,sans-serif;
+    color:var(--texto);
 }
 
-/* =========================
-   TITULOS
-========================= */
+/*==================================================
+=                     FONDO                        =
+==================================================*/
 
-h1 {
-    text-align: center;
-    color: #fff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("/static/img/frutas.jpg") center/cover no-repeat;
+    filter:brightness(.40) blur(2px);
+    z-index:-2;
 }
 
-/* =========================
-   CONTENEDOR
-========================= */
-
-.contenedor {
-    max-width: 900px;
-    margin: auto;
-    margin-top: 90px;
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:-1;
 }
 
-/* =========================
-   CARDS
-========================= */
+/*==================================================
+=                  CONTENEDOR                      =
+==================================================*/
 
-.card {
-    background-color: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(6px);
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
+.contenedor{
+
+    max-width:1000px;
+
+    margin:90px auto 30px;
+
+    padding:20px;
+
 }
 
-.card:hover {
-    transform: translateY(-2px);
+/*==================================================
+=                    TITULOS                       =
+==================================================*/
+
+h1{
+
+    color:white;
+
+    text-align:center;
+
+    margin-bottom:25px;
+
+    text-shadow:0 3px 10px rgba(0,0,0,.5);
+
 }
 
-/* =========================
-   INPUTS
-========================= */
+h2{
+
+    text-align:center;
+
+    color:var(--principal);
+
+    margin-bottom:15px;
+
+}
+
+h3{
+
+    margin:15px 0 8px;
+
+}
+
+/*==================================================
+=                    NAVBAR                        =
+==================================================*/
+
+.navbar{
+
+    position:fixed;
+
+    top:0;
+
+    width:100%;
+
+    background:rgba(0,0,0,.75);
+
+    backdrop-filter:blur(8px);
+
+    z-index:1000;
+
+}
+
+.navbar-contenedor{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 25px;
+
+}
+
+.menu{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.menu a{
+
+    color:white;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+.menu a:hover{
+
+    color:var(--principal);
+
+}
+
+/*==================================================
+=                  DROPDOWN                        =
+==================================================*/
+
+.dropdown{
+
+    position:relative;
+
+}
+
+.logo-boton{
+
+    background:none;
+
+    border:none;
+
+    color:white;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.dropdown-contenido{
+
+    display:none;
+
+    position:absolute;
+
+    top:100%;
+
+    left:0;
+
+    min-width:220px;
+
+    background:rgba(20,20,20,.95);
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 20px rgba(0,0,0,.35);
+
+}
+
+.dropdown-contenido a{
+
+    display:block;
+
+    padding:12px;
+
+    color:white;
+
+}
+
+.dropdown-contenido a:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.dropdown:hover .dropdown-contenido{
+
+    display:block;
+
+}
+/*==================================================
+=                     CARD                         =
+==================================================*/
+
+.card{
+    background:rgba(255,255,255,.94);
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+}
+
+.card p{
+    line-height:1.6;
+}
+
+.card img{
+    width:100%;
+    max-height:320px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+/*==================================================
+=                  FORMULARIOS                     =
+==================================================*/
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+label{
+    font-weight:bold;
+}
 
 input,
 textarea,
-select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+    transition:.25s;
 }
 
-textarea {
-    height: 120px;
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:var(--principal);
+    box-shadow:0 0 8px rgba(230,126,34,.25);
 }
 
-/* =========================
-   BOTONES
-========================= */
-
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+textarea{
+    min-height:150px;
+    resize:vertical;
 }
 
-button:hover {
-    background-color: #218838;
+input[type=file]{
+    background:#f5f5f5;
 }
 
-/* =========================
-   LINKS
-========================= */
+/*==================================================
+=                    BOTONES                       =
+==================================================*/
 
-a {
-    text-decoration: none;
-    color: #007bff;
-    margin-right: 10px;
+button,
+.btn-login,
+.btn-registro,
+.nueva-receta{
+
+    display:inline-block;
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    transition:.3s;
+
 }
 
-a:hover {
-    text-decoration: underline;
+button,
+.btn-login{
+
+    width:100%;
+
+    background:var(--principal);
+
+    color:white;
+
 }
 
-/* =========================
-   BOTÓN NUEVA RECETA
-========================= */
+button:hover,
+.btn-login:hover{
 
-.nueva-receta {
-    display: inline-block;
-    margin-bottom: 20px;
-    background: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
+    background:var(--principal-hover);
+
 }
 
-.nueva-receta:hover {
-    background: #0056b3;
+.btn-registro{
+
+    width:100%;
+
+    background:var(--verde);
+
+    color:white;
+
+    text-align:center;
+
 }
 
-/* =========================
-   CATEGORÍAS
-========================= */
+.btn-registro:hover{
 
-.categoria {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
-    color: white;
-    font-size: 14px;
+    background:var(--verde-hover);
+
 }
 
-.dulce {
-    background-color: #ff69b4;
+.nueva-receta{
+
+    background:var(--azul);
+
+    color:white;
+
 }
 
-.salada {
-    background-color: #ff9800;
+.nueva-receta:hover{
+
+    background:var(--azul-hover);
+
 }
 
-/* =========================
-   IMAGENES
-========================= */
+/*==================================================
+=                    CATEGORIAS                    =
+==================================================*/
 
-img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
+.categoria{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:20px;
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:bold;
+
 }
 
-/* =========================
-   VIDEO
-========================= */
-
-.video-box {
-    margin-top: 10px;
+.dulce{
+    background:var(--rosa);
 }
 
-.video-title {
-    background: #007bff;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: bold;
+.salada{
+    background:var(--naranja);
 }
 
-.video-title:hover {
-    background: #0056b3;
+/*==================================================
+=                     VIDEO                        =
+==================================================*/
+
+.video-box{
+    margin-top:12px;
 }
 
-.video-mini {
-    width: 100%;
-    max-width: 320px;
-    border-radius: 12px;
-    margin-top: 10px;
+.video-title{
+    display:inline-block;
+    padding:8px 15px;
+    background:var(--principal);
+    color:white;
+    border-radius:20px;
+    cursor:pointer;
 }
 
-/* =========================
-   PASSWORD SHOW
-========================= */
-
-.mostrar-password {
-    display: inline-block;
-    margin-top: 10px;
-    color: #007bff;
-    cursor: pointer;
-    font-size: 14px;
-    user-select: none;
+.video-title:hover{
+    background:var(--principal-hover);
 }
 
-.mostrar-password input[type="checkbox"] {
-    margin: 0;
-    width: auto;
+.video-mini{
+    display:block;
+    width:300px;
+    max-width:100%;
+    height:170px;
+    margin:15px auto;
+    border-radius:10px;
+    object-fit:cover;
 }
 
-/* =========================
-   FOOTER
-========================= */
 
-.footer {
-    margin-top: 40px;
-    padding: 20px;
-    text-align: center;
-    background-color: rgba(0,0,0,0.6);
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
+/*==================================================
+=                     LOGIN                        =
+==================================================*/
+
+.login-body{
+    margin:0;
+    min-height:100vh;
+    overflow:auto;
 }
 
-/* =========================
-   NAVBAR (PRO FIX)
-========================= */
+/* Fondo */
 
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(10px);
+.login-body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("/static/img/frutas.jpg") center/cover no-repeat;
+    filter:brightness(.35) blur(3px);
+    z-index:-2;
 }
 
-.navbar-contenedor {
-    max-width: 1100px;
-    margin: auto;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 10px 20px;
+.login-body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    z-index:-1;
 }
 
-/* =========================
-   MENU
-========================= */
+/* Contenedor */
 
-.menu {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.login-wrapper{
 
-    flex-wrap: nowrap;
-    white-space: nowrap;
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
 }
 
-.menu a,
-.usuario,
-.logo-boton {
-    color: white !important;
+/* Tarjeta */
+
+.login-card{
+
+    width:100%;
+
+    max-width:380px;
+
+    background:rgba(0,0,0,.82);
+
+    border-radius:15px;
+
+    padding:20px;
+
+    color:white;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+
 }
 
-/* =========================
-   LOGOUT
-========================= */
+/* Título */
 
-.logout-form {
-    margin: 0;
-    display: inline;
+.login-card h1{
+
+    color:white;
+
+    text-align:center;
+
+    font-size:34px;
+
+    margin-bottom:5px;
+
 }
 
-/* =========================
-   DROPDOWN FIX REAL
-========================= */
+/* Subtítulo */
 
-.dropdown {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
+.sub{
+
+    text-align:center;
+
+    color:#ddd;
+
+    font-size:14px;
+
+    margin-bottom:12px;
+
 }
 
-.logo-boton {
-    background: none;
-    border: none;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
+/* Etiquetas */
+
+.login-card label{
+
+    display:block;
+
+    margin:8px 0 4px;
+
+    font-weight:bold;
+
+    color:white;
+
 }
 
-/* oculto por defecto */
-.dropdown-contenido {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
+/* Campos */
 
-    background: rgba(20,20,20,0.95);
-    min-width: 200px;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-    overflow: hidden;
-    z-index: 2000;
+.login-card input,
+.login-card select{
+
+    width:100%;
+
+    padding:9px;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:15px;
+
 }
 
-.dropdown-contenido a {
-    display: block;
-    padding: 12px;
-    color: white;
+/* Mostrar contraseña */
+
+.mostrar-password{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin:10px 0;
+
+    color:white;
+
+    font-size:14px;
+
 }
 
-.dropdown-contenido a:hover {
-    background: rgba(255,255,255,0.1);
+.mostrar-password input{
+
+    width:auto;
+
+    margin:0;
+
 }
 
-/* 🔥 clave del funcionamiento */
-.dropdown:hover .dropdown-contenido {
-    display: block;
+/* Botón ingresar */
+
+.btn-login{
+
+    width:100%;
+
+    margin-top:10px;
+
+    padding:11px;
+
+    background:#e67e22;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.btn-login:hover{
 
-@media (max-width: 600px) {
+    background:#d35400;
 
-    .menu {
-        flex-direction: column;
-        gap: 8px;
+}
+
+/* Registrarse */
+
+.registro-container{
+
+    margin-top:15px;
+
+    text-align:center;
+
+}
+
+.btn-registro{
+
+    display:block;
+
+    width:100%;
+
+    padding:11px;
+
+    background:#27ae60;
+
+    color:white;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+.btn-registro:hover{
+
+    background:#1e8449;
+
+}
+
+/* Recuperar contraseña */
+
+.recuperar-password{
+
+    margin-top:15px;
+
+    text-align:center;
+
+}
+
+.recuperar-password a{
+
+    color:#ddd;
+
+    text-decoration:none;
+
+}
+
+.recuperar-password a:hover{
+
+    color:white;
+
+}
+
+/* Error */
+
+.error{
+
+    background:#c0392b;
+
+    color:white;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    margin-bottom:12px;
+
+    text-align:center;
+
+}
+
+/* Pantallas bajas */
+
+@media (max-height:750px){
+
+    .login-wrapper{
+
+        align-items:flex-start;
+
+        padding-top:20px;
+
+        padding-bottom:20px;
+
     }
 
-    .video-mini {
-        max-width: 100%;
+    .login-card{
+
+        margin:0;
+
+        padding:18px;
+
     }
+
+    .login-card h1{
+
+        font-size:30px;
+
+    }
+
 }
-
-/* =========================
-   LOGIN NETFLIX STYLE
-========================= */
-
-.login-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial;
-}
-
-/* fondo blur */
-.login-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    background-image: url("/static/img/frutas.jpg");
-    background-size: cover;
-    background-position: center;
-
-    filter: blur(6px) brightness(0.3);
-    z-index: -2;
-}
-
-/* overlay oscuro */
-.login-body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: -1;
-}
-
-/* centrar */
-.login-wrapper {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* card */
-.login-card {
-    width: 350px;
-    background: rgba(0,0,0,0.75);
-    padding: 30px;
-    border-radius: 12px;
-    color: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-}
-
-.login-card h1 {
-    margin-bottom: 5px;
-}
-
-.sub {
-    font-size: 14px;
-    opacity: 0.8;
-    margin-bottom: 20px;
-}
-
-.login-card input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 5px;
-    border: none;
-}
-
-/* botón */
-.login-card button {
-    width: 100%;
-    margin-top: 15px;
-    background: #5d1bae;
-    font-weight: bold;
-}
-
-.login-card button:hover {
-    background: #4419bb;
-}
-
-.error {
-    color: #401e9e;
-    font-size: 14px;
-}
-
-/* =========================
-   ROL DEL USUARIO
-========================= */
+/*==================================================
+=                    USUARIO                       =
+==================================================*/
 
 .usuario{
 
@@ -469,25 +760,21 @@ img {
 
     font-size:12px;
 
-    font-weight:bold;
-
 }
 
 .editor{
-
-    background:#28a745;
-
+    background:#27ae60;
     color:white;
-
 }
 
 .lector{
-
-    background:#007bff;
-
+    background:#2980b9;
     color:white;
-
 }
+
+/*==================================================
+=                    TABLAS                        =
+==================================================*/
 
 table{
 
@@ -495,28 +782,165 @@ table{
 
     border-collapse:collapse;
 
-    margin-top:20px;
+    background:white;
+
+    border-radius:10px;
+
+    overflow:hidden;
 
 }
 
 th{
 
-    background:#007bff;
+    background:#2980b9;
 
     color:white;
 
-    padding:12px;
+    padding:14px;
 
 }
 
 td{
 
-    background:white;
-
     padding:12px;
+
+    border-bottom:1px solid #ddd;
 
     text-align:center;
 
-    border-bottom:1px solid #ddd;
+}
+/*==================================================
+=                    FOOTER                        =
+==================================================*/
+
+.footer{
+
+    margin-top:40px;
+
+    padding:20px;
+
+    text-align:center;
+
+    color:white;
+
+    background:rgba(0,0,0,.55);
+
+    border-radius:12px;
+
+}
+
+.footer p{
+    margin:4px 0;
+}
+
+/*==================================================
+=                  RESPONSIVE                      =
+==================================================*/
+
+@media(max-width:900px){
+
+    .contenedor{
+        width:95%;
+    }
+
+    .navbar-contenedor{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .menu{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+}
+
+@media(max-width:700px){
+
+    h1{
+        font-size:28px;
+    }
+
+    h2{
+        font-size:24px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .login-card{
+        max-width:95%;
+    }
+
+    table{
+        display:block;
+        overflow:auto;
+        white-space:nowrap;
+    }
+
+}
+
+@media(max-width:500px){
+
+    .menu{
+
+        flex-direction:column;
+
+        gap:10px;
+
+    }
+
+    .navbar-contenedor{
+
+        padding:10px;
+
+    }
+
+    .logo-boton{
+
+        font-size:18px;
+
+    }
+
+    .video-mini{
+
+        width:100%;
+
+        height:auto;
+
+    }
+
+}
+
+/*==================================================
+=                  UTILIDADES                      =
+==================================================*/
+
+.text-center{
+    text-align:center;
+}
+
+.mt-20{
+    margin-top:20px;
+}
+
+.mb-20{
+    margin-bottom:20px;
+}
+
+.oculto{
+    display:none;
+}
+html,
+body{
+
+    min-height:100%;
+
+}
+
+.login-body{
+
+    overflow-y:auto;
 
 }
