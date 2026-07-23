@@ -492,17 +492,17 @@ button:hover,
 
     width:100%;
 
-    max-width:380px;
+    max-width:360px;
 
     background:rgba(0,0,0,.82);
 
     border-radius:15px;
 
-    padding:20px;
+    padding:16px;
 
     color:white;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    box-shadow:0 10px 25px rgba(0,0,0,.45);
 
 }
 
@@ -510,16 +510,13 @@ button:hover,
 
 .login-card h1{
 
-    color:white;
+    font-size:30px;
+
+    margin:0 0 5px;
 
     text-align:center;
 
-    font-size:34px;
-
-    margin-bottom:5px;
-
 }
-
 /* Subtítulo */
 
 .sub{
@@ -528,9 +525,9 @@ button:hover,
 
     color:#ddd;
 
-    font-size:14px;
+    font-size:13px;
 
-    margin-bottom:12px;
+    margin-bottom:10px;
 
 }
 
@@ -540,11 +537,13 @@ button:hover,
 
     display:block;
 
-    margin:8px 0 4px;
+    margin-top:6px;
+
+    margin-bottom:2px;
+
+    font-size:14px;
 
     font-weight:bold;
-
-    color:white;
 
 }
 
@@ -555,13 +554,11 @@ button:hover,
 
     width:100%;
 
-    padding:9px;
+    padding:8px;
 
-    border:none;
+    font-size:14px;
 
-    border-radius:8px;
-
-    font-size:15px;
+    border-radius:7px;
 
 }
 
@@ -573,13 +570,11 @@ button:hover,
 
     align-items:center;
 
-    gap:8px;
+    gap:6px;
 
-    margin:10px 0;
+    margin-top:6px;
 
-    color:white;
-
-    font-size:14px;
+    font-size:13px;
 
 }
 
@@ -599,7 +594,7 @@ button:hover,
 
     margin-top:10px;
 
-    padding:11px;
+    padding:9px;
 
     background:#e67e22;
 
@@ -609,7 +604,7 @@ button:hover,
 
     border-radius:8px;
 
-    font-size:18px;
+    font-size:16px;
 
     font-weight:bold;
 
@@ -641,7 +636,7 @@ button:hover,
 
     width:100%;
 
-    padding:11px;
+    padding:9px;
 
     background:#27ae60;
 
@@ -667,7 +662,9 @@ button:hover,
 
 .recuperar-password{
 
-    margin-top:15px;
+    margin-top:10px;
+
+    font-size:13px;
 
     text-align:center;
 
@@ -709,15 +706,19 @@ button:hover,
 
 @media (max-height:750px){
 
-    .login-wrapper{
+.login-wrapper{
 
-        align-items:flex-start;
+    min-height:100vh;
 
-        padding-top:20px;
+    display:flex;
 
-        padding-bottom:20px;
+    justify-content:center;
 
-    }
+    align-items:center;
+
+    padding:15px;
+
+}
 
     .login-card{
 
